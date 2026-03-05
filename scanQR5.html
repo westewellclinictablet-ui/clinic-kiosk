@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Clinic Welcome Screen</title>
+    <style>
+        :root {
+            --primary-blue: #005eb8; /* Professional Medical Blue */
+            --light-bg: #f8fafc;
+            --text-dark: #1e293b;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--light-bg);
+            color: var(--text-dark);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            text-align: center;
+        }
+        .container {
+            max-width: 600px;
+            padding: 40px;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+        }
+        .logo {
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--primary-blue);
+            margin-bottom: 10px;
+        }
+        h1 { font-size: 2.5rem; margin-bottom: 1rem; }
+        p { font-size: 1.2rem; color: #64748b; margin-bottom: 2.5rem; }
+        
+        .scan-button {
+            background-color: var(--primary-blue);
+            color: white;
+            border: none;
+            padding: 25px 50px;
+            font-size: 1.5rem;
+            font-weight: 600;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: transform 0.2s, background-color 0.2s;
+            box-shadow: 0 4px 15px rgba(0, 94, 184, 0.3);
+        }
+        .scan-button:active {
+            transform: scale(0.95);
+            background-color: #004a91;
+        }
+        .footer-note {
+            margin-top: 3rem;
+            font-size: 0.9rem;
+            color: #94a3b8;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="logo">Mary Rigal & Associates</div>
+        <div class="logo">West Ewell Podiatry Clinic</div>
+        <h1>Welcome</h1>
+        <p>Please tap the button below to scan your unique appointment QR code and complete your intake form.</p>
+        
+<button class="scan-button" onclick="launchFullyScanner();">Tap to Scan</button>
+
+        <div class="footer-note">
+            Your data is handled securely via Cliniko.
+        </div>
+    </div>
+
+<script>
+window.onQrScanSuccess = function(result) {
+    alert('Callback fired! Result: ' + result);
+    if (result) {
+        window.location.href = result;
+    }
+}
+
+window.onQrScanFailed = function() {
+    alert('Scan failed or timed out.');
+}
+
+function launchFullyScanner() {
+    if (typeof fully !== 'undefined') {
+        fully.scanQrCode('Scan your Cliniko QR code', '', 0, 60, true, true);
+    } else {
+        alert('Fully Kiosk interface not detected. Check settings!');
+    }
+}
+</script>
+</body>
+</html>
